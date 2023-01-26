@@ -7,6 +7,6 @@ import retrofit2.create
 object Common {
     private val BASE_URL = "https://newsapi.org/v2/"
     val dataNewsApi: DataNewsApi
-    get()= RetrofitClient.getClient(BASE_URL)!!.create(DataNewsApi::class.java)
+    get()= RetrofitClient.getClient(BASE_URL).create(DataNewsApi::class.java)
 
 }
