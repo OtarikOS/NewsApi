@@ -1,6 +1,7 @@
 package com.koshkin.android.newsapigoogle.presentation
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,9 +11,16 @@ import androidx.recyclerview.widget.RecyclerView
 import com.koshkin.android.newsapigoogle.R
 import com.koshkin.android.newsapigoogle.data.datanews.DataNews
 import com.bumptech.glide.Glide
+import com.koshkin.android.newsapigoogle.MainActivity
+import com.koshkin.android.newsapigoogle.data.datanews.Articles
 
 
-class NewsAdapter(private val context: Context, private val newsList: MutableList<DataNews?>): RecyclerView.Adapter<NewsAdapter.MyViewHolder>() {
+class NewsAdapter(private val context: Context, private val newsList: MutableList<Articles>): RecyclerView.Adapter<NewsAdapter.MyViewHolder>() {
+
+    companion object{
+        private  val TAG = NewsAdapter::class.java.simpleName
+    }
+
     class MyViewHolder (itemView:View):RecyclerView.ViewHolder(itemView){
 
         val image:ImageView =itemView.findViewById(R.id.imageView)
@@ -35,16 +43,18 @@ class NewsAdapter(private val context: Context, private val newsList: MutableLis
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val listItem = newsList?.get(position)
 
-        Glide.with(context).load(newsList?.get(position)!!.articles?.get(position)?.urlToImage).into(holder.image)
-        holder.txtName.text = newsList[position]!!.articles[position].source?.name
-        holder.txtAuthor.text = newsList[position]!!.articles[position].author
-        holder.txtTitle.text = newsList[position]!!.articles[position].title
-        holder.txtDescription.text = newsList[position]!!.articles[position].description
-        holder.txtUrl.text = newsList[position]!!.articles[position].url
-        holder.txtUrlToImage.text = newsList[position]!!.articles[position].urlToImage
-        holder.txtPublished.text = newsList[position]!!.articles[position].publishedAt
-        holder.txtContent.text = newsList[position]!!.articles[position].content
+        Glide.with(context).load(newsList[position].urlToImage).into(holder.image)
+        holder.txtName.text = newsList[position].source?.name
+        holder.txtAuthor.text = newsList[position].author
+        holder.txtTitle.text = newsList[position].title
+        holder.txtDescription.text = newsList[position].description
+        holder.txtUrl.text = newsList[position].url
+        holder.txtUrlToImage.text = newsList[position].urlToImage
+        holder.txtPublished.text = newsList[position].publishedAt
+        holder.txtContent.text = newsList[position].content
+        Log.i(TAG,newsList[position].title.toString())
     }
 
     override fun getItemCount()=newsList!!.size
+
 }
