@@ -15,7 +15,7 @@ import com.koshkin.android.newsapigoogle.MainActivity
 import com.koshkin.android.newsapigoogle.data.datanews.Articles
 
 
-class NewsAdapter(private val context: Context, private val newsList: MutableList<Articles>): RecyclerView.Adapter<NewsAdapter.MyViewHolder>() {
+class NewsAdapter(private val context: Context, private val newsList: ArrayList<Articles>): RecyclerView.Adapter<NewsAdapter.MyViewHolder>() {
 
     companion object{
         private  val TAG = NewsAdapter::class.java.simpleName

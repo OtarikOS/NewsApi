@@ -7,5 +7,5 @@ import retrofit2.http.GET
 
 interface DataNewsApi {
     @GET("top-headlines?country=ru&apiKey=1f740efa1d0747d9a12fa555fde103e3")
-    fun getNews(): Call<MutableList<Articles>>
+    fun getNews(): Call<DataNews>
 }

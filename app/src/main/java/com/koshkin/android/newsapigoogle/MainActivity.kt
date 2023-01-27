@@ -23,6 +23,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var mDataNewsApi: DataNewsApi
     lateinit var linearLayoutManager: LinearLayoutManager
     lateinit var newsAdapter: NewsAdapter
+    lateinit var articlesArrayList: ArrayList<Articles>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,15 +38,15 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun getAllNews() {
-        mDataNewsApi.getNews().enqueue(object : Callback<MutableList<Articles>> {
-            override fun onFailure(call: Call<MutableList<Articles>>, t: Throwable) {}
+        mDataNewsApi.getNews().enqueue(object : Callback<DataNews> {
+            override fun onFailure(call: Call<DataNews>, t: Throwable) {}
 
             override fun onResponse(
-                call: Call<MutableList<Articles>>,
-                response: Response<MutableList<Articles>>
+                call: Call<DataNews>,
+                response: Response<DataNews>
 
             ) {
-                newsAdapter = NewsAdapter(baseContext, response.body() as MutableList<Articles>)
+                newsAdapter = NewsAdapter(baseContext, response.body()?.articles as ArrayList<Articles>)
                 newsAdapter.notifyDataSetChanged()
                 recyclerNewsList.adapter = newsAdapter
             }
