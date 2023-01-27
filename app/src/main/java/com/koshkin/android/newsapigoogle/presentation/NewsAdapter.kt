@@ -9,9 +9,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.koshkin.android.newsapigoogle.R
-import com.koshkin.android.newsapigoogle.data.datanews.DataNews
 import com.bumptech.glide.Glide
-import com.koshkin.android.newsapigoogle.MainActivity
 import com.koshkin.android.newsapigoogle.data.datanews.Articles
 
 
@@ -31,7 +29,6 @@ class NewsAdapter(private val context: Context, private val newsList: ArrayList<
         val txtUrl:TextView =itemView.findViewById(R.id.url)
         val txtUrlToImage:TextView =itemView.findViewById(R.id.url_toImage)
         val txtPublished:TextView =itemView.findViewById(R.id.publishedAt)
-        val txtContent:TextView =itemView.findViewById(R.id.content)
 
     }
 
@@ -51,7 +48,6 @@ class NewsAdapter(private val context: Context, private val newsList: ArrayList<
         holder.txtUrl.text = newsList[position].url
         holder.txtUrlToImage.text = newsList[position].urlToImage
         holder.txtPublished.text = newsList[position].publishedAt
-        holder.txtContent.text = newsList[position].content
         Log.i(TAG,newsList[position].title.toString())
     }
 
