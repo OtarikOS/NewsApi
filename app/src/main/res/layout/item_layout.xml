@@ -64,10 +64,12 @@
             android:id="@+id/url"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:clickable="true"
             android:text="TextView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/description"/>
+            app:layout_constraintTop_toBottomOf="@id/description"
+            android:focusable="true" />
 
 
         <TextView

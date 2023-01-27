@@ -33,7 +33,7 @@ class NewsAdapter(private val context: Context, private val newsList: ArrayList<
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.item_layout,parent,false)
+        val itemView = LayoutInflater.from(context).inflate(R.layout.item_layout,parent,false)
         return MyViewHolder(itemView)
     }
 
@@ -49,6 +49,8 @@ class NewsAdapter(private val context: Context, private val newsList: ArrayList<
         holder.txtUrlToImage.text = newsList[position].urlToImage
         holder.txtPublished.text = newsList[position].publishedAt
         Log.i(TAG,newsList[position].title.toString())
+
+
     }
 
     override fun getItemCount()=newsList!!.size

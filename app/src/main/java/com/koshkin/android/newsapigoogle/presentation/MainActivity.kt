@@ -2,6 +2,11 @@ package com.koshkin.android.newsapigoogle.presentation
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
+import android.widget.ProgressBar
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.koshkin.android.newsapigoogle.R
@@ -15,10 +20,6 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class MainActivity : AppCompatActivity() {
-
-    companion object{
-        private  val TAG = MainActivity::class.java.simpleName
-    }
 
     lateinit var mDataNewsApi: DataNewsApi
     lateinit var linearLayoutManager: LinearLayoutManager
@@ -34,6 +35,7 @@ class MainActivity : AppCompatActivity() {
         linearLayoutManager = LinearLayoutManager(this)
         recyclerNewsList.layoutManager = linearLayoutManager
 
+        val progressBar: ProgressBar =findViewById(R.id.progressBar)
         getAllNews()
 
         swipe = findViewById(R.id.swipe)
@@ -44,13 +46,18 @@ class MainActivity : AppCompatActivity() {
 
     private fun getAllNews() {
         mDataNewsApi.getNews().enqueue(object : Callback<DataNews> {
-            override fun onFailure(call: Call<DataNews>, t: Throwable) {}
+            override fun onFailure(call: Call<DataNews>, t: Throwable) {
+                progressBar.visibility = View.GONE
+                Toast.makeText(this@MainActivity,"Ошибка соединения "+t,Toast.LENGTH_LONG).show()
+                Log.i("RER","$t")
+            }
 
             override fun onResponse(
                 call: Call<DataNews>,
                 response: Response<DataNews>
 
             ) {
+                progressBar.visibility = View.GONE
                 newsAdapter = NewsAdapter(baseContext, response.body()?.articles as ArrayList<Articles>)
                 newsAdapter.notifyDataSetChanged()
                 recyclerNewsList.adapter = newsAdapter
