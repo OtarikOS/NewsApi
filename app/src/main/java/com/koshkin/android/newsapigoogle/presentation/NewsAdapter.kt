@@ -1,8 +1,10 @@
 package com.koshkin.android.newsapigoogle.presentation
 
 import android.content.Context
+import android.text.Html
 import android.text.SpannableString
 import android.text.Spanned
+import android.text.method.LinkMovementMethod
 import android.text.style.URLSpan
 import android.text.util.Linkify
 import android.util.Log
@@ -17,11 +19,8 @@ import com.bumptech.glide.Glide
 import com.koshkin.android.newsapigoogle.data.datanews.Articles
 
 
-class NewsAdapter(private val context: Context, private val newsList: ArrayList<Articles>): RecyclerView.Adapter<NewsAdapter.MyViewHolder>() {
+class NewsAdapter(private val context: Context, private val newsList: ArrayList<Articles>): RecyclerView.Adapter<NewsAdapter.MyViewHolder>(){
 
-    companion object{
-        private  val TAG = NewsAdapter::class.java.simpleName
-    }
 
     class MyViewHolder (itemView:View):RecyclerView.ViewHolder(itemView){
 
@@ -34,6 +33,7 @@ class NewsAdapter(private val context: Context, private val newsList: ArrayList<
         val txtUrlToImage:TextView =itemView.findViewById(R.id.url_toImage)
         val txtPublished:TextView =itemView.findViewById(R.id.publishedAt)
 
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -43,11 +43,11 @@ class NewsAdapter(private val context: Context, private val newsList: ArrayList<
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val listItem = newsList?.get(position)
-   //     var data = "<a href = "+newsList[position].url+">"+"Источник"+"</a>"
+        var data = "<a href = "+newsList[position].url+">"+"Источник"+"</a>"
 
         val textToUrl = "Источник"
-        val ss:SpannableString = SpannableString(textToUrl)
-        ss.setSpan(URLSpan(textToUrl),0,textToUrl.length,Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+      //  val ss = SpannableString(textToUrl)
+     //   ss.setSpan(URLSpan(textToUrl),0,textToUrl.length,Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
 
         Glide.with(context).load(newsList[position].urlToImage).into(holder.image)
         holder.txtName.text = newsList[position].source?.name
@@ -61,10 +61,16 @@ class NewsAdapter(private val context: Context, private val newsList: ArrayList<
 
        // holder.txtUrl.linksClickable
     //    holder.txtUrl.text = data
-        holder.txtUrl.text =ss
-        Linkify.addLinks(holder.txtUrl,Linkify.WEB_URLS)
+     //   holder.txtUrl.text =ss
+     //   Linkify.addLinks(holder.txtUrl,Linkify.WEB_URLS)
+
+        holder.txtUrl.text =(Html.fromHtml(data,Html.FROM_HTML_MODE_COMPACT))
+        holder.txtUrl.movementMethod =LinkMovementMethod.getInstance()
+
     }
 
     override fun getItemCount()=newsList!!.size
+
+
 
 }
