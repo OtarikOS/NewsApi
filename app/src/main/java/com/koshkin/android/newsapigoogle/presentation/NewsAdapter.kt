@@ -1,6 +1,10 @@
 package com.koshkin.android.newsapigoogle.presentation
 
 import android.content.Context
+import android.text.SpannableString
+import android.text.Spanned
+import android.text.style.URLSpan
+import android.text.util.Linkify
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -39,18 +43,26 @@ class NewsAdapter(private val context: Context, private val newsList: ArrayList<
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val listItem = newsList?.get(position)
+   //     var data = "<a href = "+newsList[position].url+">"+"Источник"+"</a>"
+
+        val textToUrl = "Источник"
+        val ss:SpannableString = SpannableString(textToUrl)
+        ss.setSpan(URLSpan(textToUrl),0,textToUrl.length,Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
 
         Glide.with(context).load(newsList[position].urlToImage).into(holder.image)
         holder.txtName.text = newsList[position].source?.name
         holder.txtAuthor.text = newsList[position].author
         holder.txtTitle.text = newsList[position].title
         holder.txtDescription.text = newsList[position].description
-        holder.txtUrl.text = newsList[position].url
+     //   holder.txtUrl.text = newsList[position].url
         holder.txtUrlToImage.text = newsList[position].urlToImage
         holder.txtPublished.text = newsList[position].publishedAt
-        Log.i(TAG,newsList[position].title.toString())
+        Log.i("DIRR",newsList[position].url.toString())
 
-
+       // holder.txtUrl.linksClickable
+    //    holder.txtUrl.text = data
+        holder.txtUrl.text =ss
+        Linkify.addLinks(holder.txtUrl,Linkify.WEB_URLS)
     }
 
     override fun getItemCount()=newsList!!.size
